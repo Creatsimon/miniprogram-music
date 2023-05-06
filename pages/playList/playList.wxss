@@ -1,0 +1,46 @@
+/* pages/playList/playList.wxss */
+.t{
+    display: flex;
+    justify-content: center;
+    margin: var(--t--);
+}
+
+.img{
+    display: flex;
+    justify-content: center;
+    filter: drop-shadow(1px 10px 10px rgba(75, 75, 75, 0.5));
+}
+
+.text{
+    display: flex;
+    justify-content: center;
+}
+
+
+.p1{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    display: -moz-box;
+    -moz-line-clamp: 1;
+    -moz-box-orient: vertical;
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: normal;    
+  }
+
+ .button-example {
+  margin: 0 32rpx;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 70rpx;
+}
+
+.button-example2 {
+    margin: 0 50rpx 20rpx;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 110rpx;
+  }

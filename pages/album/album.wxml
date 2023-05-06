@@ -1,0 +1,107 @@
+<wxs module="filters" src="../../utils/tool.wxs"></wxs>
+<!-- <view class="t" style="--t--:{{height*0.01}}rpx"></view>
+<t-image src="{{albumInfo.album.blurPicUrl}}" width="{{width*0.6}}" height="{{width*0.6}}" shape="round" class="img">
+</t-image> -->
+<view>
+    <t-sticky>
+
+        <t-navbar class="{{isNotLookAlbumName ? 'custom-navbar2' : 'custom-navbar'}}" left-arrow>
+            <view slot="left" class="custom-title">
+                <text class="p" style="font-weight: 700;">{{albumName}}</text>
+            </view>
+        </t-navbar>
+
+    </t-sticky>
+
+
+
+
+    <view class="test1">
+        <t-image src="{{albumInfo.album.blurPicUrl}}" width="{{width}}" height="{{width}}" class="img1" />
+
+
+        <view class="t" style="--t--:{{height*0.01}}rpx"></view>
+        <text class="text" style="font-size: 20px;font-weight: 700;" id="albumNameId">{{albumInfo.album.name}}</text>
+
+        <view style="text-align: center;">
+            <text style="font-size: 15px;font-weight: 700;color: #fb233b;" wx:for="{{albumInfo.album.artists}}" wx:key="key" wx:for-item="ar">{{ar.name+' '}}</text>
+        </view>
+
+        <view class="t" style="--t--:{{height*0.001}}rpx"></view>
+        <text class="text" style="font-size: 10px;font-weight: 700;color: #868686;">{{albumInfo.album.company+' '+publishTime}}</text>
+
+        <view style="height: 10px;"></view>
+        <text class="p" style="font-size: 20rpx;font-weight: 500;margin-left: 10px;margin-right: 10px;" bindtap="check">{{albumInfo.album.description}}</text>
+
+        <t-popup visible="{{visible}}" bind:visible-change="onVisibleChange" placement="bottom">
+            <view class="block" style="max-height: {{height*0.9}}px;">
+                <view class="header">
+                    <view class="title">{{albumInfo.album.name}}</view>
+                </view>
+                <scroll-view scroll-y="true" style="max-height: {{height*0.8}}px;">
+                    <t-cell-group theme="card">
+                        <text class="dec">{{albumInfo.album.description}}</text>
+                        <view style="height: 10px;"></view>
+                    </t-cell-group>
+                </scroll-view>
+
+            </view>
+
+            <!-- <view class="block" >
+                <view class="header">
+                    <view class="title">{{albumInfo.album.name}}</view>
+                </view>
+                    <t-cell-group theme="card">
+                        <text class="dec">{{albumInfo.album.description}}</text>
+                    </t-cell-group>
+            </view> -->
+
+        </t-popup>
+
+
+        <!-- <t-cell wx:for="{{allSong}}" wx:key="key" wx:for-item="s" title="{{s.name}}" hover="true" description="{{s.singer}}" data-songId="{{s.id}}" image="{{s.pic}}" bordered="{{true}}" url="/pages/play/play?songId={{s.id}}"/> -->
+        <view wx:for="{{albumInfo.songs}}" wx:key="key" wx:for-item="s">
+            <t-cell wx:if="{{s.cp==0}}" data-songId="{{s.id}}" title="" bindtap=''>
+                <view slot="note">
+                    <t-icon name="more" data-songId="{{s.id}}" catchtap="clickIcon" />
+                </view>
+                <view slot="title">
+                    <text class="p1" style="font-size:35rpx;font-weight: 500;color: gray;">{{index+1+'. '+s.name}}</text>
+                </view>
+
+                <view slot="description">
+                    <view class="p1" wx:if="{{albumInfo.album.artists.length>1||s.ar.length>1}}">
+                            <p  wx:for="{{s.ar}}" wx:key="key" wx:for-item="a">{{a.name}}{{s.ar.length-1==index ? '':'/'}}</p>
+                    </view>
+
+                </view>
+
+                <view slot="left-icon">
+
+                </view>
+            </t-cell>
+
+            <t-cell wx:if="{{s.cp!=0}}" data-songId="{{s.id}}" title="" url="/pages/play/play?songId={{s.id}}" bindtap='createPlayList'>
+                <view slot="note">
+                    <t-icon name="more" data-songId="{{s.id}}" catchtap="clickIcon" />
+                </view>
+                <view slot="title">
+                    <text class="p1" style="font-size:35rpx;font-weight: 500;">{{index+1+'. '+s.name}}</text>
+                </view>
+
+                <view slot="description">
+                    <view class="p1" wx:if="{{albumInfo.album.artists.length>1||s.ar.length>1}}">
+                            <p  wx:for="{{s.ar}}" wx:key="key" wx:for-item="a">{{a.name}}{{s.ar.length-1==index ? '':'/'}}</p>
+                    </view>
+                </view>
+
+                <view slot="left-icon">
+
+                </view>
+            </t-cell>
+
+        </view>
+
+
+    </view>
+</view>

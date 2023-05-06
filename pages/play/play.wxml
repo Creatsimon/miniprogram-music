@@ -1,0 +1,336 @@
+<wxs module="filters" src="../../utils/tool.wxs"></wxs>
+<t-message id="t-message" />
+
+
+
+<t-popup visible="{{songOrAlbum}}" bind:visible-change="onVisibleChangeSongOrAlbum" placement="bottom">
+
+
+    <view class="topBlock">
+        <view class="block" style="max-height: {{phoneHeight*0.9}}px;">
+            <scroll-view scroll-y="true" style="max-height: {{phoneHeight*0.9}}px;">
+                <t-cell wx:for="{{singerInfos}}" wx:key="key" bordered="{{false}}" url='/pages/singer/singer?singerId={{item.id}}'>
+                    <view slot="title">
+                        <text style="font-size: 20px;font-weight: 700;">前往艺人</text>
+                    </view>
+                    <view slot="description">
+                        <text decode="true" style="font-size: 15px;font-weight: 500;">{{item.name}}</text>
+                    </view>
+                    <view slot="left-icon">
+                        <t-avatar size="{{phoneWidth*0.15}}px" image="{{item.avatar}}" />
+                    </view>
+                </t-cell>
+
+                <t-cell bind:click="" bordered="{{false}}" url="/pages/album/album?albumId={{songDetail[0].al.id}}" hover='true'>
+                    <view slot="title">
+                        <text style="font-size: 20px;font-weight: 700;">前往专辑</text>
+                    </view>
+                    <view slot="description">
+                        <text decode="true" class="p1" style="font-size: 15px;font-weight: 500;">{{songDetail[0].al.name}}</text>
+                    </view>
+                    <view slot="left-icon">
+                        <!-- <t-image src="{{songDetail[0].al.picUrl+'?param='+filters.integer(phoneWidth*0.5)+'y'+filters.integer(phoneWidth*0.5)}}" width="{{phoneWidth*0.15}}" height="{{phoneWidth*0.15}}" shape="round" /> -->
+                        <t-image src="{{songDetail[0].al.picUrl}}" width="{{phoneWidth*0.15}}" height="{{phoneWidth*0.15}}" shape="round" />
+                    </view>
+                </t-cell>
+            </scroll-view>
+        </view>
+    </view>
+
+</t-popup>
+
+<t-popup visible="{{addPlayListState}}" bind:visible-change="addPlayListStateChange" placement="bottom">
+    <view class="block" style="max-height: {{phoneHeight*0.9}}px;">
+        <view class="header">
+            <view class="title">选择歌单</view>
+        </view>
+        <scroll-view style="max-height: {{phoneHeight*0.8}}px;">
+            <t-cell wx:for="{{userPlayList}}" wx:key="key" wx:for-item="u" bindtap="addMyPlayList" data-id="{{u.id}}">
+                <view slot="title">
+                    <text class='p1' style="font-size: 35rpx;font-weight: 600;">{{u.playListName}}</text>
+                </view>
+                <view slot="left-icon">
+                    <t-image src="{{u.playListPic}}" width="{{phoneWidth*0.15}}" height="{{phoneWidth*0.15}}" shape="round" />
+                </view>
+            </t-cell>
+        </scroll-view>
+        <!-- <t-icon t-class="close-btn" name="close-circle" size="32" color="#fff" bind:tap="onClose" /> -->
+    </view>
+</t-popup>
+
+<!-- <image  src="{{songDetail[0].al.picUrl}}" class="bg-image" mode="aspectFill" />
+<view class="bg-cover"></view> -->
+
+<view class="back"></view>
+<image src="{{songDetail[0].al.picUrl}}" class="backImg" mode="widthFix" />
+<image src="{{songDetail[0].al.picUrl}}" class="backImg1" mode="widthFix" />
+<image src="{{songDetail[0].al.picUrl}}" class="backImg2" mode="widthFix" />
+<image src="{{songDetail[0].al.picUrl}}" class="backImg3" mode="widthFix" />
+<block wx:if="{{isOpenLyrics==false&&isOpenPlayList==false}}">
+
+
+    <!-- <t-navbar class="custom-navbar">
+        <view slot="capsule" class="custom-capsule">
+            <t-icon size="20" bind:tap="onBack" aria-role="button" aria-label="返回" name="chevron-left" class="custom-capsule__icon" />
+            <t-icon size="20" bind:tap="onGoHome" aria-role="button" aria-label="首页" name="home" class="custom-capsule__icon" />
+        </view>
+    </t-navbar> -->
+
+    <view class="t" style="--t--:{{phoneHeight*0.12}}rpx"></view>
+    <t-image src="{{songDetail[0].al.picUrl}}" width="{{phoneHeight*0.4}}" height="{{phoneHeight*0.4}}" shape="round" class="{{isPlay ? 'col' : 'col1'}}" />
+
+
+    <!-- <t-image src="{{songDetail[0].al.picUrl}}" width="{{phoneWidth*0.9}}" height="{{phoneWidth*0.9}}" shape="round" class="col" /> -->
+    <view class="t" style="--t--:{{phoneHeight*0.02}}rpx"></view>
+    <!-- <view class="t" style="--t--:{{phoneHeight*0.03}}rpx"></view> -->
+
+    <t-cell bordered="{{false}}" bindtap="openSingerOrAlbum">
+        <!-- <t-cell bordered="{{false}}" title="{{songDetail[0].name}}" description="{{songDetail[0].ar[0].name}}"custom-style="background-color:transparent;color:white;"/> -->
+        <view slot="title">
+            <t-notice-bar direction='horizontal' visible="{{visible}}" prefixIcon="null" marquee="{{songNameWidth > phoneWidth*0.75 ? 'marquee1' :''}}" content="" custom-style="width: {{phoneWidth*0.75}}px;">
+                <view slot="content">
+                    <text id="songName" style="font-weight: 700;white-space: nowrap;">{{songDetail[0].name}}</text>
+                </view>
+            </t-notice-bar>
+        </view>
+
+        <!-- <text decode="true" style="font-size:20px;color: white;font-weight: 2000;">&nbsp;&nbsp;{{songDetail[0].name}}\n</text> -->
+        <view slot="description">
+
+            <t-notice-bar direction='horizontal' visible="{{visible}}" prefixIcon="null" marquee="{{ singerNameWidth>phoneWidth*0.75? 'marquee1' :''}}" content="" custom-style="width: {{phoneWidth*0.75}}px;">
+                <view slot="content">
+                    <text id="singerName" style="font-weight: 500;white-space: nowrap;color: white; opacity: 0.5;">{{singer}}</text>
+                </view>
+            </t-notice-bar>
+        </view>
+
+        <view slot="note">
+            <t-button wx:if="{{isTranslation}}" size="small" icon="more" shape="circle" variant="text" bindtap="closeTranslation" catchtap="more" custom-style="background-color:grey;opacity:0.5;color:white;">
+            </t-button>
+            <!-- <t-icon size="30px" name="more" catchtap="more" custom-style="color:white" /> -->
+        </view>
+
+        <!-- <text decode="true" style="font-size:20px;color: white;font-weight: 2000;">&nbsp;&nbsp;{{songDetail[0].ar[0].name}}</text> -->
+    </t-cell>
+
+
+    <view class="t" style="--t--:{{phoneHeight*0.001}}rpx"></view>
+    <t-cell-group theme="card">
+        <slider value="{{ProValue}}" min="{{ProMin}}" max="{{ProMax}}" step="1" activeColor="white" block-size="12" block-color="white" color="grey" bindchange="sliderChange" bindchanging="sliderChanging" />
+
+    </t-cell-group>
+    <view class="button-example3">
+        <text decode="true" style="color: white;">{{currentTime}}</text>
+        <text decode="true" style="color: white;">{{allTime}}</text>
+    </view>
+
+
+    <view class="t" style="--t--:{{phoneHeight*0.05}}rpx"></view>
+
+    <view class="button-example">
+    
+        <t-button wx:if="{{playList[0].id==songId}}" theme="primary" size="large"  shape="circle" variant="text" bindtap="" disabled>
+            <t-image src="/img/dys.png" width="{{phoneHeight*0.06}}" height="{{phoneHeight*0.06}}">
+            </t-image>
+        </t-button>
+
+        <t-button wx:if="{{playList[0].id!=songId}}" theme="primary" size="large"  shape="circle" variant="text" bindtap="playLast" >
+            <t-image src="/img/sys.png" width="{{phoneHeight*0.06}}" height="{{phoneHeight*0.06}}">
+            </t-image>
+        </t-button>
+
+
+        <t-button theme="primary" size="large"  shape="circle" bindtap="{{isPlay ? 'audioPause' : 'audioPlay'}}" variant="text">
+            <t-image src="{{isPlay ? '/img/zt.png' :'/img/bf.png'}}" width="{{phoneHeight*0.06}}" height="{{phoneHeight*0.06}}">
+
+            </t-image>
+        </t-button>
+
+        <t-button wx:if="{{playList[playList.length-1].id == songId}}" theme="primary" size="large"  shape="circle" variant="text" bindtap="" disabled>
+            <t-image src="/img/zhys.png" width="{{phoneHeight*0.06}}" height="{{phoneHeight*0.06}}">
+            </t-image>
+        </t-button>
+
+        <t-button wx:if="{{playList[playList.length-1].id != songId}}" theme="primary" size="large"  shape="circle" variant="text" bindtap="playNext" >
+            <t-image src="/img/xys.png" width="{{phoneHeight*0.06}}" height="{{phoneHeight*0.06}}">
+            </t-image>
+        </t-button>
+
+    </view>
+
+    <view class="t" style="--t--:{{phoneHeight*0.05}}rpx"></view>
+    <view class="button-example2">
+        <t-button theme="primary" size="small" shape="square" variant="text" bindtap="openLyrics">
+            <t-image src="/img/gc.png" width="30" height="30"></t-image>
+        </t-button>
+        <t-button theme="primary" size="small" icon="" shape="square" variant="text" bindtap="openPlayList">
+            <t-image src="/img/bflb.png" width="30" height="30"></t-image>
+        </t-button>
+    </view>
+
+    <t-popup visible="{{visible1}}" bind:visible-change="onVisibleChange" placement="bottom">
+        <view class="block" style="--h--:{{phoneHeight*0.3}}px">
+            <t-cell-group theme="card">
+                <t-cell bind:click="" bordered="{{false}}" title="">
+                    <view slot="title">
+                        <text class="p1">{{songDetail[0].name}}</text>
+                    </view>
+                    <view slot="description">
+                        <text class="p1" style="color: #fb233b;">{{singer}}\n</text>
+                        <text class="p1" style="color: #3c3c41;">{{songDetail[0].al.name}}</text>
+                    </view>
+                    <view slot="left-icon">
+                        <t-image src="{{songDetail[0].al.picUrl+'?param='+filters.integer(phoneWidth*0.5)+'y'+filters.integer(phoneWidth*0.5)}}" width="{{phoneWidth*0.15}}" height="{{phoneWidth*0.15}}" shape="round" />
+                    </view>
+
+                </t-cell>
+                <view wx:if="{{isLogin==true&&WechatOrCloudMuisc=='Wechat'}}">
+                    <t-cell bind:click="openMyPlayList" bordered="{{false}}" title="+添加到我的歌单">
+                    </t-cell>
+                    <view wx:if="{{isLove==true}}">
+                        <t-cell bind:click="removeMyLove" bordered="{{false}}" title="-从我喜欢里移除">
+                        </t-cell>
+                    </view>
+                    <view wx:if="{{isLove==false}}">
+                        <t-cell bind:click="addMyLove" bordered="{{false}}" title="+添加到我的喜欢">
+                        </t-cell>
+                    </view>
+                </view>
+            </t-cell-group>
+
+        </view>
+
+    </t-popup>
+
+</block>
+
+<block wx:if="{{isOpenLyrics==true||isOpenPlayList==true}}">
+
+
+
+    <!-- <view class="t" style="--t--:{{phoneHeight*0.05}}rpx"></view>
+<t-sticky offset-top="{{ phoneHeight*0.05 }}">
+    <t-cell-group theme="card">
+            <t-cell title="{{songDetail[0].name}}" hover="true" description="{{songDetail[0].ar[0].name}}" bind:click="" image="{{songDetail[0].al.picUrl}}" bordered="{{false}}"/>
+    </t-cell-group>
+</t-sticky> -->
+
+    <swiper-item>
+        <!-- <view class="t" style="--t--:{{phoneHeight*0.09}}rpx"></view> -->
+        <view style="height: {{barHeight}}px;"></view>
+
+        <view class="mh">
+            <t-cell bordered="{{false}}" bind:click="closeLyric">
+                <view slot="left-icon">
+                    <t-image src="{{songDetail[0].al.picUrl+'?param='+filters.integer(phoneWidth*0.5)+'y'+filters.integer(phoneWidth*0.5)}}" width="{{phoneWidth*0.15}}" height="{{phoneWidth*0.15}}" shape="round" />
+                </view>
+
+
+
+                <view slot="title" wx:if="{{!isWW}}">
+                    <t-notice-bar visible="{{visible}}" prefixIcon="null" marquee="{{songNameWidth>phoneWidth*0.7 ? 'marquee1' :''}}" custom-style="width: {{phoneWidth*0.7}}px;">
+                        <view slot="content">
+                            <text style="font-weight: 700;white-space: nowrap;">{{songDetail[0].name}}</text>
+                        </view>
+                    </t-notice-bar>
+                </view>
+                <view slot="description" wx:if="{{!isWW}}">
+                    <t-notice-bar visible="{{visible}}" prefixIcon="null" marquee="{{singerNameWidth>phoneWidth*0.7 ? 'marquee1' :''}}" custom-style="width: {{phoneWidth*0.7}}px;">
+                        <view slot="content">
+                            <text style="font-weight: 500;white-space: nowrap;color: white; opacity: 0.5;">{{singer}}</text>
+                        </view>
+                    </t-notice-bar>
+                </view>
+
+
+
+
+                <view slot="title" wx:if="{{isWW}}">
+                    <t-notice-bar visible="{{visible}}" prefixIcon="null" marquee="{{songNameWidth>phoneWidth*0.57 ? 'marquee1' :''}}" custom-style="width: {{phoneWidth*0.57}}px;">
+                        <view slot="content">
+                            <text style="font-weight: 700;white-space: nowrap;">{{songDetail[0].name}}</text>
+                        </view>
+                    </t-notice-bar>
+                </view>
+                <view slot="description" wx:if="{{isWW}}">
+                    <t-notice-bar visible="{{visible}}" prefixIcon="null" marquee="{{singerNameWidth>phoneWidth*0.57 ? 'marquee1' :''}}" custom-style="width: {{phoneWidth*0.57}}px;">
+                        <view slot="content">
+                            <text style="font-weight: 500;white-space: nowrap;color: white; opacity: 0.5;">{{singer}}</text>
+                        </view>
+                    </t-notice-bar>
+                </view>
+
+
+
+
+
+                <view wx:if="{{isWW}}" slot="note">
+                    <t-button wx:if="{{isTranslation}}" theme="primary" size="small" icon="" shape="circle" variant="text" bindtap="closeTranslation">
+                        <t-image src="/img/fyk.png" width="{{phoneHeight*0.06}}" height="{{phoneHeight*0.06}}"></t-image>
+                    </t-button>
+                    <t-button wx:if="{{!isTranslation}}" theme="primary" size="small" icon="" shape="circle" variant="text" bindtap="openTranslation">
+                        <t-image src="/img/fyg.png" width="{{phoneHeight*0.06}}" height="{{phoneHeight*0.06}}"></t-image>
+                    </t-button>
+                </view>
+            </t-cell>
+            <t-cell  bordered="{{false}}" wx:if="{{isOpenPlayList==true}}">
+                <view slot="title">
+                    <text style="font-weight: 700;white-space: nowrap;font-size: 45rpx;color: white;">待播清单</text>  
+                </view>
+            </t-cell>
+        </view>
+
+
+
+
+        <!-- <t-sticky offset-top="{{ phoneHeight*0.05 }}">
+        <view class="view_tupian_wenzi">
+                <t-image src="{{songDetail[0].al.picUrl}}" width="{{phoneWidth*0.2}}" height="{{phoneWidth*0.2}}" shape="round" class="img"></t-image>
+                <view class="view_wenzi2">
+                    <text class="" style="color: white;font-size: 15px;font-weight: 500;">{{songDetail[0].name}}</text>
+                    <text class="text_small">{{songDetail[0].ar[0].name}}</text>
+                </view>
+        </view>
+    </t-sticky> -->
+
+        <scroll-view wx:if="{{isOpenLyrics===true}}" class="lyric-list" scroll-y="true" scroll-with-animation='true' scroll-top="{{top}}" enhanced='true' show-scrollbar enable-passive='true' binddragging="onScroll" binddragend="finishScroll" binddragstart="starScroll">
+            <!-- <view wx:for="{{lyricsInfo}}" wx:key="time" class="{{playIndex == index ? 'item.active' : 'item'}}" data-time="{{item.time}}" data-index="{{index}} "bindtap="clickLyricPlay" style="word-break: break-all;" id="{{'play'+index}}">{{item.text}}</view>
+            <view class="item" id='test' style="height: {{phoneHeight*0.7}}px;"></view> -->
+
+            <view style="height: 79px;"></view>
+            <t-cell wx:for="{{lyricsInfo}}" wx:key="index" bordered="{{false}}" bind:click="" hover="true" id="{{'play'+index}}" custom-style="transform: scale(0.98);">
+                <view slot="title">
+                    <view bindtap="clickLyricPlay" data-index="{{index}}" data-time="{{item.playTime}}" class="{{playIndex == index ? 'play' : 'noPlay'}}" style="--b--:{{isScroll ? '0' : '4'}}rpx;">{{item.text}}
+                        <view wx:if="{{isTranslation}}" style="font-size: 45rpx;">{{item.text2}}</view>
+                    </view>
+                </view>
+            </t-cell>
+
+            <view class="play" style="height: {{phoneHeight*0.8}}px;"></view>
+
+
+        </scroll-view>
+
+        <scroll-view wx:if="{{isOpenPlayList===true}}"  class="lyric-list" scroll-y="true" scroll-with-animation='true' enhanced='true' show-scrollbar enable-passive='true'>
+
+            <t-cell bordered="{{false}}" bind:click="" wx:for="{{playList}}" wx:key="key" wx:for-item="p" hover="true" data-songid="{{p.id}}" bindtap="changeSong">
+                <view slot="left-icon">
+                    <t-image src="{{p.albumPic}}" width="{{phoneWidth*0.15}}" height="{{phoneWidth*0.15}}" shape="round" />
+                </view>
+
+                <view slot="title">
+                    <text class="p1" style="font-weight: 700;color: white">{{p.songName}}</text>
+                </view>
+                <view slot="description" >
+
+                    <view class="p1">
+                            <p style="font-weight: 500;color: white; opacity: 0.5;"  wx:for="{{p.songSingers}}" wx:key="key" wx:for-item="s">{{s.name}}{{p.songSingers.length-1==index ? '':'/'}}</p>
+                    </view>
+                </view>
+
+            </t-cell>
+            <view class="play" style="height: {{phoneHeight*0.8}}px;"></view>
+        </scroll-view>
+
+    </swiper-item>
+</block>

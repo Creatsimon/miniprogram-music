@@ -1,0 +1,10 @@
+{
+    "usingComponents": {
+        "t-image": "/miniprogram_npm/tdesign-miniprogram/image/image",
+        "t-cell": "/miniprogram_npm/tdesign-miniprogram/cell/cell",
+        "t-button": "/miniprogram_npm/tdesign-miniprogram/button/button",
+        "t-icon": "/miniprogram_npm/tdesign-miniprogram/icon/icon",
+        "t-action-sheet": "/miniprogram_npm/tdesign-miniprogram/action-sheet/action-sheet",
+        "t-dialog": "/miniprogram_npm/tdesign-miniprogram/dialog/dialog"
+    }
+}

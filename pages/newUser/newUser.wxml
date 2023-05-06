@@ -1,0 +1,16 @@
+<t-message id="t-message" />
+<view data-weui-theme="{{theme}}">
+  <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+    <image class="avatar" src="{{avatarUrl}}"></image>
+  </button> 
+  <mp-form>
+    <mp-cells>
+        <t-input type="nickname" label="昵称" placeholder="请输入昵称" bind:change="inputNickName" value="{{nickname}}"></t-input>
+    </mp-cells>
+  </mp-form>
+<view style="height: 20px;"></view>
+  <t-cell-group theme="card">
+    <t-button theme="primary" size="medium" block bindtap="addUser">确定</t-button>
+  </t-cell-group>
+  
+</view>

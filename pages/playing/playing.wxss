@@ -1,0 +1,230 @@
+/* pages/play/play.wxss */
+
+page{
+    --td-cell-background-color: transparent;
+}
+
+.col {
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+  }
+
+.nicheng{
+    display: flex;
+    justify-content: center;
+    margin: 20rpx 0;
+}
+
+.button-example {
+    margin: 0 100rpx;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 120rpx;
+  }
+  
+  .button-example:not(:last-child) {
+    margin-bottom: 32rpx;
+  }
+
+  .test1{
+    display: flex;
+    justify-content: center;
+    margin: 20rpx 0;
+  }
+
+  .gaoshi-bendi {
+    /* 这一步设置是关键设置 */
+    position: fixed;
+    height:var(--w--);
+    width:var(--w--);
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    filter: blur(50rpx);
+    opacity: 0.8;
+    transform: scale(1.2);
+  }
+
+  .bgImage{
+    position: absolute;
+    height:var(--w--);
+    width:var(--w--);
+    z-index: -1;
+    opacity: 0.75;
+    overflow: hidden;
+  }
+  .bgImage>image{
+    height:100%;
+    width:100%;
+    background: rgba(0,0,0,0.2);
+    -webkit-filter:blur(15px);
+    -moz-filter:blur(15px);
+    -o-filter:blur(15px);
+    -ms-filter:blur(15px);
+    filter:blur(0px);
+  }
+
+  .t{
+    display: flex;
+    justify-content: center;
+    margin: var(--t--);
+}
+
+
+.t-cell--card{
+    --td-bg-color-page: transparent;
+}
+
+.button-example2 {
+    margin: 0 100rpx;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 420rpx;
+  }
+
+  .button-example3 {
+    margin: 0 50rpx;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 500rpx;
+  }
+
+  .col1 {
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    transform: scale(0.85);
+  }
+
+  
+  /* 歌词的样式 */
+.lyric-list {
+    color: rgb(196, 189, 189);
+    font-size: 60rpx;
+    font-weight: 800;
+    text-align: left;
+    height: 85%;
+    box-sizing: border-box;
+    padding: 0rpx;
+  }
+  
+  .lyric-list ::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .lyric-list .item {
+    margin: 30px;
+  }
+  
+  .lyric-list .item.active {
+    color: white;
+    font-size: 65rpx;
+  }
+
+
+   .bg-image, .bg-cover {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+  .bg-cover {
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter:blur(50px) ;
+    transform: scale(1.2);
+  }
+
+  .lala{
+    display: flex;
+    justify-content: left;
+    padding: 10px;
+  }
+
+  .play{
+      font-size: 55rpx;
+      font-weight: 700;
+      color: white;
+      line-height: 40px;
+      transform: scale(1);
+      
+  }
+
+  .noPlay{
+    font-size: 55rpx;
+    font-weight: 700;
+    color:white;
+    opacity:0.4;
+    line-height: 40px;
+    filter: blur(var(--b--));
+    transform: scale(0.98);
+    
+  }
+
+
+  .block {
+    width: 100vw;
+    height: var(--h--);
+    background: #fff;
+    border-top-left-radius: 16rpx;
+    border-top-right-radius: 16rpx;
+  }
+
+  .block1 {
+    position: relative;
+    width: var(--h--);
+    height: var(--h--);
+    background: #fff;
+    border-radius: 16rpx;
+  }
+  
+  .close-btn {
+    position: absolute;
+    left: 50%;
+    margin-left: -32rpx;
+    bottom: calc(-1 * (48rpx + 64rpx));
+  }
+  
+  .wrapper {
+    margin: 32rpx;
+    display: block;
+  }
+
+  .custom-navbar {
+    float: left;
+    --td-navbar-color: white;
+    opacity:0.5;
+    --td-navbar-bg-color: transparent;
+  }
+
+  .custom-capsule {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .custom-capsule__icon {
+    flex: 1;
+    position: relative;
+  }
+  
+  .custom-capsule__icon + .custom-capsule__icon:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -1px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 36rpx;
+    background: #e7e7e7;
+  }
+  
+  

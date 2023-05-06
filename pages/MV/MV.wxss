@@ -1,0 +1,12 @@
+/* pages/MV/MV.wxss */
+.custom-navbar {
+    float: left;
+    --td-navbar-color: #fff;
+    --td-navbar-bg-color: transparent;
+  }
+
+  .custom-navbar2 {
+    --td-navbar-color: black;
+    --td-navbar-bg-color: white;
+    overflow: hidden;
+  }

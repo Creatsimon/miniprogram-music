@@ -1,0 +1,111 @@
+<wxs module="filters" src="../../utils/tool.wxs"></wxs>
+<wxs module="formatDate" src="../../utils/fiter.wxs"></wxs>
+<view wx:if="{{type==1}}">
+    <t-cell-group theme="card">
+        <t-cell wx:for="{{hotSongs}}" wx:key="key" wx:for-item="h" url="/pages/play/play?songId={{h.id}}">
+            <view slot="description">
+                <view class="p1">
+                    <p wx:for="{{h.ar}}" wx:key="key" wx:for-item="ar" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{ar.name}}{{h.ar.length-1==index ? '':'/'}}
+                    </p>
+                </view>
+            </view>
+            <view class="p1" slot="title">
+                {{h.name}}
+            </view>
+            <view slot="left-icon">
+                <t-image src="{{h.al.picUrl+'?param='+filters.integer(width*0.3)+'y'+filters.integer(width*0.3)}}" width="{{width*0.15}}" height="{{width*0.15}}" shape="round" />
+            </view>
+            <view slot="note">
+                <t-icon name="more" catchtap="clickIcon" />
+            </view>
+        </t-cell>
+    </t-cell-group>
+</view>
+
+<view wx:if="{{type==10}}">
+    <t-grid column="{{2}}" theme="card" gutter="15">
+        <t-grid-item wx:for="{{EP}}" wx:key="key" wx:for-item="a" text="" url="/pages/album/album?albumId={{a.id}}">
+            <view solt="image">
+                <!-- <t-image src="{{a.blurPicUrl+'?param='+filters.integer(width*0.55)+'y'+filters.integer(width*0.55)}}" width="{{width*0.43}}" height="{{width*0.43}}" shape="round" /> -->
+                <t-image src="{{a.blurPicUrl}}" width="{{width*0.43}}" height="{{width*0.43}}" shape="round" />
+                <view style="height: 10px;"></view>
+                <text class="p1" style="font-size: 25rpx;font-weight: 700;width: {{width*0.43}}px;">{{a.name}}</text>
+                <text style="color: #8f8e92;font-size: 24rpx;font-weight: 700;">{{formatDate.formatDate(a.publishTime)}}</text>
+                <!-- <text class="p1" style="font-size: 20rpx;font-weight: 500;">{{m.artistName}}</text> -->
+            </view>
+        </t-grid-item>
+    </t-grid>
+</view>
+
+<view wx:if="{{type==100}}">
+    <t-grid column="{{2}}" theme="card" gutter="15">
+        <t-grid-item wx:for="{{Albums}}" wx:key="key" wx:for-item="a" text="" url="/pages/album/album?albumId={{a.id}}">
+            <view solt="image">
+                <!-- <t-image src="{{a.blurPicUrl+'?param='+filters.integer(width*0.55)+'y'+filters.integer(width*0.55)}}" width="{{width*0.43}}" height="{{width*0.43}}" shape="round" /> -->
+                <t-image src="{{a.blurPicUrl}}" width="{{width*0.43}}" height="{{width*0.43}}" shape="round" />
+                <view style="height: 5px;"></view>
+                <text class="p1" style="font-size: 25rpx;font-weight: 700;width: {{width*0.43}}px;">{{a.name}}\n</text>
+                <text style="color: #8f8e92;font-size: 24rpx;font-weight: 700;">{{formatDate.formatDate(a.publishTime)}}</text>
+                <!-- <text class="p1" style="font-size: 20rpx;font-weight: 500;">{{m.artistName}}</text> -->
+            </view>
+        </t-grid-item>
+    </t-grid>
+</view>
+
+
+<view wx:if="{{type==1000}}">
+    <t-cell-group theme="card">
+        <t-cell wx:for="{{allSongs}}" wx:key="key" wx:for-item="s" url="/pages/play/play?songId={{s.id}}">
+            <view slot="description">
+                <view class="p1">
+                    <p wx:for="{{s.ar}}" wx:key="key" wx:for-item="ar" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{ar.name}}{{s.ar.length-1==index ? '':'/'}}</p>
+                </view>
+            </view>
+            <view class="p1" slot="title">
+                {{s.name}}
+            </view>
+            <view slot="left-icon">
+                <!-- <t-image src="{{s.al.picUrl+'?param='+filters.integer(width*0.3)+'y'+filters.integer(width*0.3)}}" width="{{width*0.15}}" height="{{width*0.15}}" shape="round" /> -->
+                <t-image src="{{s.al.picUrl}}" width="{{width*0.15}}" height="{{width*0.15}}" shape="round" />
+            </view>
+            <view slot="note">
+                <t-icon name="more" catchtap="clickIcon" />
+            </view>
+        </t-cell>
+    </t-cell-group>
+</view>
+
+<view wx:if="{{type==1004}}">
+    <!-- <t-cell wx:for="{{MVInfo}}" wx:key="key" wx:for-item="s" url="/pages/MV/MV?MVId={{s.id}}">
+        <view slot="description">
+            <text style="font-size: 10px;font-weight: 700;">{{s.artistName}}-</text>
+            <text style="font-size: 10px;font-weight: 700;">{{s.publishTime}}</text>
+        </view>
+        <view slot="title">
+            <text style="font-size: 15px;font-weight: 700;">{{s.name}}</text>
+        </view>
+        <view slot="left-icon">
+            <t-image src="{{s.imgurl16v9}}" width="{{width*0.3}}" mode="widthFix" shape="round" />
+        </view>
+
+    </t-cell> -->
+
+    <t-grid column="{{2}}" theme="card" gutter="15">
+        <t-grid-item wx:for="{{MVInfo}}" wx:key="key" wx:for-item="a" text="{{}}" url="/pages/MV/MV?MVId={{a.id}}">
+
+            <!-- <view solt='text'>
+<text style="font-size: 15px;font-weight: 500;">{{a.name}}\n</text>
+<text style="font-size: 10px;font-weight: 500;color: #3c3c41;">{{a.artistName}}</text>
+</view> -->
+
+            <view solt="image">
+                <!-- <t-image src="{{a.blurPicUrl+'?param='+filters.integer(width*0.55)+'y'+filters.integer(width*0.55)}}" width="{{width*0.43}}" height="{{width*0.43}}" shape="round" /> -->
+                <t-image src="{{a.imgurl16v9}}" width="{{width*0.45}}" mode="widthFix" shape="round" />
+                <view style="height: 10px;"></view>
+                <text class="p1" style="font-size: 25rpx;font-weight: 700;">{{a.name+'-'+a.artistName}}</text>
+                <!-- <text class="p1" style="font-size: 20rpx;font-weight: 500;">{{m.artistName}}</text> -->
+            </view>
+        </t-grid-item>
+    </t-grid>
+
+</view>

@@ -1,0 +1,9 @@
+{
+    "navigationBarTitleText": "",
+    "usingComponents": {
+        "t-image": "/miniprogram_npm/tdesign-miniprogram/image/image",
+        "t-cell": "/miniprogram_npm/tdesign-miniprogram/cell/cell",
+        "t-avatar": "/miniprogram_npm/tdesign-miniprogram/avatar/avatar",
+        "t-button": "/miniprogram_npm/tdesign-miniprogram/button/button"
+    }
+}

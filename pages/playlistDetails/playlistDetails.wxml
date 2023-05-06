@@ -1,0 +1,80 @@
+<wxs module="filters" src="../../utils/tool.wxs"></wxs>
+
+<!-- <view class="t" style="--t--:{{height*0.02}}rpx"></view> -->
+<!-- <t-image src="{{playList.playlist.coverImgUrl+'?param='+filters.integer(width*0.6)+'y'+filters.integer(width*0.6)}}" width="{{width*0.6}}" height="{{width*0.6}}" shape="round" class="img"> -->
+<!-- <t-image src="{{playList.playlist.coverImgUrl}}" width="{{width*0.6}}" height="{{width*0.6}}" shape="round" class="img">
+</t-image> -->
+
+<t-popup visible="{{visible}}" bind:visible-change="onVisibleChange" placement="bottom">
+    <view class="block2" style="max-height: {{height*0.9}}px;">
+        <view class="header">
+            <view class="title">歌单介绍</view>
+        </view>
+        <scroll-view scroll-y="true" style="max-height: {{height*0.8}}px;">
+            <t-cell-group theme="card">
+                <text class="dec">{{playList.playlist.description}}</text>
+                <view style="height: 10px;"></view>
+            </t-cell-group>
+        </scroll-view>
+
+    </view>
+
+    <!-- <view class="block">
+                <view class="header">
+                    <view class="title">{{albumInfo.album.name}}</view>
+                </view>
+                    <t-cell-group theme="card">
+                        <text class="dec">{{albumInfo.album.description}}</text>
+                    </t-cell-group>
+            </view> -->
+
+</t-popup>
+
+<t-cell bordered="{{false}}">
+    <view slot="description" bindtap="check">
+        <text class='p' style="font-size: 20rpx;font-size: 600;">{{playList.playlist.description}}</text>
+    </view>
+    <view slot="title">
+        <text style="font-size: 35rpx;font-size: 700;">{{playList.playlist.name}}\n</text>
+        <text style="font-size: 25rpx;font-size: 700;">{{'Playlist by '+playList.playlist.creator.nickname+'·'+playList.playlist.trackCount+'首'}}</text>
+
+    </view>
+    <view slot="left-icon" data-songId="{{s.id}}">
+        <!-- <t-image  src="{{s.pic+'?param='+filters.integer(width*0.1)+'y'+filters.integer(width*0.1)}}" width="{{width*0.1}}" height="{{width*0.1}}" shape="round"/> -->
+        <t-image src="{{playList.playlist.coverImgUrl}}" width="{{width*0.35}}" height="{{width*0.35}}" shape="round" />
+    </view>
+
+</t-cell>
+
+<!-- <view class="t" style="--t--:{{height*0.02}}rpx"></view>
+<text class="col" style="font-size: 16px;font-weight: 500px;">{{playList.playlist.name}}</text> -->
+<!-- <view class="t" style="--t--:{{height*0.02}}rpx"></view>
+<t-cell-group theme="card">
+    <t-cell title="{{playList.playlist.name}}" rightIcon="info-circle" data-key="imageOnTop" bind:tap="showDialog" bordered="{{false}}" />
+</t-cell-group> -->
+
+
+
+<view class="t" style="--t--:{{height*0.02}}rpx"></view>
+
+<!-- <t-cell wx:for="{{allSong}}" wx:key="key" wx:for-item="s" title="{{s.name}}" hover="true" description="{{s.singer}}" data-songId="{{s.id}}" image="{{s.pic}}" bordered="{{true}}" url="/pages/play/play?songId={{s.id}}"/> -->
+<t-cell wx:for="{{allSong}}" wx:key="key" wx:for-item="s" data-songId="{{s.id}}" url="/pages/play/play?songId={{s.id}}" bordered="{{false}}">
+    <view slot="description" data-songId="{{s.id}}">
+        <text class="p1" style="font-size: 25rpx;font-size: 600;">{{s.singer}}</text>
+    </view>
+    <view slot="title" data-songId="{{s.id}}">
+        <text class="p1" style="font-size: 35rpx;font-size: 600;">{{s.name}}</text>
+    </view>
+    <view slot="left-icon" data-songId="{{s.id}}">
+        <!-- <t-image  src="{{s.pic+'?param='+filters.integer(width*0.1)+'y'+filters.integer(width*0.1)}}" width="{{width*0.1}}" height="{{width*0.1}}" shape="round"/> -->
+        <t-image src="{{s.pic}}" width="{{width*0.15}}" height="{{width*0.15}}" shape="round" />
+    </view>
+    <view slot="note">
+        <t-icon name="more" data-songId="{{s.id}}" catchtap="clickIcon" />
+    </view>
+</t-cell>
+
+
+<t-divider wx:if="{{isFinish==true}}" content="我是有底线的" />
+
+<view class="t" style="--t--:{{height*0.02}}rpx"></view>

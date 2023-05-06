@@ -1,0 +1,17 @@
+<t-message id="t-message" />
+<view data-weui-theme="{{theme}}">
+    <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+        <image class="avatar" src="{{playListPic.avatarUrl}}" shape="round" />
+    </button>
+    <view style="height: 20px;"></view>
+</view>
+
+
+
+<t-input label="歌单名称" placeholder="请输入歌单名" value="{{playListName}}" bind:change="inputPlayListName"></t-input>
+
+<t-input label="歌单描述" placeholder="请输入歌单描述(选填)" value="{{playListDesc}}" bind:change="inputPlayListDesc" />
+
+<text decode="true" style="position: absolute;right: 0;">&nbsp;&nbsp;</text>
+<t-button theme="primary" size="small" style="position: absolute;right: 0;" bindtap="onUpload">确定</t-button>
+<text decode="true" style="position: absolute;right: 0;">&nbsp;&nbsp;</text>

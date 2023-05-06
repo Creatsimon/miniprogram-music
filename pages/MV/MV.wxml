@@ -1,0 +1,44 @@
+<t-sticky>
+    <t-navbar class="{{fixs ? 'custom-navbar2' : 'custom-navbar'}}" left-arrow>
+        <view slot="left" class="custom-title">
+            <text style="font-weight: 700;">{{artisName}}</text>
+        </view>
+    </t-navbar>
+</t-sticky>
+<video src="{{MVUrl}}" style="width: {{width}}px;" autoplay='true'></video>
+
+
+    <t-cell bordered="{{false}}" url="" hover='true'>
+
+        <view slot="title">
+            <text decode="true" style="font-weight: 700;font-size: 20px;">{{MVInfo.name}}</text>
+        </view>
+
+        <view slot="description">
+            <text decode="true" style="font-weight: 700;font-size: 15px;">{{MVInfo.artistName}}\n</text>
+            <text decode="true" style="font-weight: 700;font-size: 10px;">{{MVInfo.publishTime}}\n</text>
+        </view>
+
+    </t-cell>
+
+    <t-cell bordered="{{false}}" url="" hover='true'>
+
+        <view slot="title">
+            <text decode="true" style="font-weight: 700;font-size: 20px;">更多视频</text>
+        </view>
+
+    </t-cell>
+
+    <t-cell wx:for="{{simiMVInfo}}" wx:key="key" wx:for-item="s" bindtap="switchMV" data-mvid="{{s.id}}" bordered="{{false}}" hover='true'>
+        <view slot="description">
+            <!-- <block wx:for="{{s.artists}}" wx:key="key" wx:for-item="ar">{{ar.name+' '}}</block> -->
+            <text decode="true" style="font-weight: 700;font-size: 10px;">{{s.artistName}}</text>
+        </view>
+        <view slot="title">
+            <text decode="true" style="font-weight: 700;font-size: 15px;">{{s.name}}</text>
+        </view>
+        <view slot="left-icon">
+            <t-image src="{{s.cover}}" width="{{width*0.3}}" mode="widthFix" shape="round" />
+        </view>
+
+    </t-cell>

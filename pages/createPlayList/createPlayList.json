@@ -1,0 +1,10 @@
+{
+    "navigationBarTitleText": "新建歌单",
+    "usingComponents": {
+        "t-upload": "/miniprogram_npm/tdesign-miniprogram/upload/upload",
+        "t-input": "/miniprogram_npm/tdesign-miniprogram/input/input",
+        "t-button": "/miniprogram_npm/tdesign-miniprogram/button/button",
+        "t-image": "/miniprogram_npm/tdesign-miniprogram/image/image",
+        "t-message": "/miniprogram_npm/tdesign-miniprogram/message/message"
+    }
+}

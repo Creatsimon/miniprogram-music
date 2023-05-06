@@ -1,0 +1,9 @@
+{
+    "navigationStyle": "custom",
+    "usingComponents": {
+        "t-sticky": "/miniprogram_npm/tdesign-miniprogram/sticky/sticky",
+        "t-navbar": "/miniprogram_npm/tdesign-miniprogram/navbar/navbar",
+        "t-cell": "/miniprogram_npm/tdesign-miniprogram/cell/cell",
+        "t-image": "/miniprogram_npm/tdesign-miniprogram/image/image"
+    }
+}

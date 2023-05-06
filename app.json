@@ -1,0 +1,26 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/playlistDetails/playlistDetails",
+    "pages/play/play",
+    "pages/album/album",
+    "pages/singer/singer",
+    "pages/songAndAlbumInfo/songAndAlbumInfo",
+    "pages/createPlayList/createPlayList",
+    "pages/newUser/newUser",
+    "pages/playing/playing",
+    "pages/playList/playList",
+    "pages/RecentlyOrLove/RecentlyOrLove",
+    "pages/MV/MV"
+    
+  ],
+  "requiredBackgroundModes": ["audio","location"],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "Weixin",
+    "navigationBarTextStyle":"black"
+  },
+  "sitemapLocation": "sitemap.json"
+  
+}

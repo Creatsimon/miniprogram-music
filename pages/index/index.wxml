@@ -1,0 +1,632 @@
+<!--我的-->
+<!--测试下我的代码是否更新-->
+
+
+<t-message id="t-message" />
+
+<t-popup visible="{{visible}}" bind:visible-change="onVisibleChange" placement="center">
+    <view class="block2">
+        <t-image src="{{QRImg}}" width="240px" height="240px"></t-image>
+        <t-icon t-class="close-btn" name="close-circle" size="32" color="#fff" bind:tap="onClose" />
+    </view>
+</t-popup>
+
+<wxs module="filters" src="../../utils/tool.wxs"></wxs>
+<block wx:if="{{tabBarValue=='0'}}">
+    <t-sticky>
+        <!-- <view style="background-color: white;">
+            <view class="t" style="--t--:{{phoneHeight*0.06}}px"></view>
+            <text decode="true" style="font-size: 25px;font-weight: 700;">&nbsp;&nbsp;音乐库</text>
+        </view> -->
+
+        <t-navbar class="custom-navbar2" custom-style="backdrop-filter:blur(20px);">
+            <view slot="left" class="custom-title">
+                <text class="p1" style="font-weight: 700;font-size: 55rpx;margin: 0 10px;">音乐库</text>
+            </view>
+        </t-navbar>
+
+    </t-sticky>
+
+    <t-cell bordered="{{false}}" wx:if="{{isLogin != true}}">
+        <view slot="title">
+            <text decode="true" style="font-weight: 700;font-size: 20px;">未登录</text>
+        </view>
+        <view slot="left-icon">
+            <t-avatar image="{{avatar}}" size="{{phoneWidth*0.15}}px" />
+        </view>
+
+    </t-cell>
+
+    <!-- <t-avatar wx:if="{{isLogin!=true}}" class="touxiang" image="{{avatar}}" size="large" /> -->
+    <!-- <t-avatar wx:if="{{isLogin==true && WechatOrCloudMusic=='Wechat'}}" image="{{'http://'+ip+':8080/img/getImage?openid='+openid}}" class="touxiang" size="large" />
+    <t-avatar wx:if="{{isLogin==true && WechatOrCloudMusic=='CloudMusic'}}" image="{{cloudMusicUserAvatar}}" class="touxiang" size="large" />
+    <text wx:if="{{isLogin==true && WechatOrCloudMusic=='Wechat'}}" class="nicheng" style="font-size: 20px;font-weight: 600;">{{userName+'的音乐库'}}
+    </text> -->
+
+    <t-cell bordered="{{false}}" wx:if="{{isLogin==true && WechatOrCloudMusic=='Wechat'}}">
+        <view slot="title">
+            <text decode="true" class="foo" style="font-weight: 700;font-size: 20px;">{{userName+'的音乐库'}}</text>
+        </view>
+        <view slot="left-icon">
+            <!-- <t-avatar image="{{'http://'+ip+':8080/img/getImage?openid='+openid}}" size="{{phoneWidth*0.25}}px" /> -->
+            <t-avatar image="{{'http://'+ip+':8080/img/getImage?openid='+openid}}" size="{{phoneWidth*0.15}}px" />
+        </view>
+        <view slot="right-icon">
+            <t-button bindtap="logout" size="large" icon="logout" shape="circle" variant="text"></t-button>
+        </view>
+    </t-cell>
+
+    <text wx:if="{{isLogin==true && WechatOrCloudMusic=='CloudMusic'}}" class="nicheng" style="font-size: 20px;font-weight: 600;">{{cloudMusicNickName}}</text>
+
+    <view wx:if="{{isLogin!=true}}" class="nicheng">
+        <t-button size="small" icon="logo-wechat" bindtap="Login" custom-style="background-color:#1aa034;color:white;">微信号登录</t-button>
+        <text decode="true">&nbsp;&nbsp;</text>
+        <t-button theme="danger" size="small" icon="/img/wyy.png" bindtap="cloudMuiscLogin">网易云登录</t-button>
+        <view class="t" style="--t--:{{phoneHeight*0.05}}px"></view>
+    </view>
+
+    <view wx:if="{{isLogin!=true}}">
+        <view class="t" style="--t--:{{phoneHeight*0.2}}px"></view>
+        <t-empty t-class="empty-cls" t-class-image="t-empty__image" image="/img/wdl.png" description="您还未登录" />
+    </view>
+
+
+
+
+
+    <view wx:if="{{isLogin==true}}">
+        <view wx:if="{{WechatOrCloudMusic=='Wechat'}}">
+            <t-cell bordered="{{false}}" bindtap="toLoverSinger" hover='true'>
+                <view slot="title">
+                    <text decode="true" style="font-weight: 700;font-size: 20px;" class="img">关注艺人</text>
+                </view>
+                <view slot="left-icon">
+                    <t-icon name="user-add" style="color: #fb233b;"></t-icon>
+                </view>
+                <view slot="right-icon">
+                    <t-icon name="chevron-right" style="color: #3c3c41;"></t-icon>
+                </view>
+            </t-cell>
+        </view>
+        <t-cell bordered="{{false}}" bindtap="toRecently" hover='true'>
+            <view slot="title">
+                <text decode="true" style="font-weight: 700;font-size: 20px;" class="img">最近播放</text>
+            </view>
+            <view slot="left-icon">
+                <t-icon name="history" style="color: #fb233b;"></t-icon>
+            </view>
+            <view slot="right-icon">
+                <t-icon name="chevron-right" style="color: #3c3c41;"></t-icon>
+            </view>
+        </t-cell>
+
+
+
+        <!-- <view wx:if="{{WechatOrCloudMusic=='Wechat'}}">
+            <view wx:if="{{UserRecentlyListenTopThree==null}}">
+                <t-empty t-class="empty-cls" t-class-image="t-empty__image" image="/img/kong.png" description="暂无最近播放，快去听歌吧！" />
+            </view>
+            <view wx:if="{{UserRecentlyListenTopThree!=null}}">
+
+                <t-cell wx:for="{{UserRecentlyListenTopThree}}" wx:key="key" wx:for-item="u" url="/pages/play/play?songId={{u.id}}" bordered="{{false}}">
+                    <view slot="description">
+
+                        <view class="p1">
+                            <text wx:for="{{u.ar}}" wx:key="key" wx:for-item="ar">{{ar.name+' '}}</text>
+                        </view>
+                    </view>
+                    <view slot="title">
+
+                        <text class="p1" style="font-size: 30rpx;font-size: 500;">{{u.name}}</text>
+                    </view>
+                    <view slot="left-icon">
+                        <t-image src="{{u.al.picUrl+'?param='+filters.integer(phoneWidth*0.3)+'y'+filters.integer(phoneWidth*0.3)}}" width="{{phoneWidth*0.15}}" height="{{phoneWidth*0.15}}" shape="round" />
+                    </view>
+                    <view slot="note">
+                        <t-icon name="more" data-songId="{{u.id}}" catchtap="clickIcon" />
+                    </view>
+                </t-cell>
+
+            </view>
+        </view> -->
+        <view wx:if="{{WechatOrCloudMusic=='CloudMusic'}}">
+            <t-empty t-class="empty-cls" t-class-image="t-empty__image" image="/img/kong.png" description="暂无最近播放，快去听歌吧！" />
+        </view>
+
+        <t-cell bordered="{{false}}" bindtap="toMyLove" hover='true'>
+            <view slot="title">
+                <text decode="true" style="font-weight: 700;font-size: 20px;" class="img">我喜欢的</text>
+            </view>
+            <view slot="left-icon">
+                <t-icon name="heart" style="color: #fb233b;"></t-icon>
+            </view>
+            <view slot="right-icon">
+                <t-icon name="chevron-right" style="color: #3c3c41;"></t-icon>
+            </view>
+        </t-cell>
+
+
+        <view wx:if="{{WechatOrCloudMusic=='Wechat'}}">
+            <!-- <view wx:if="{{UserLoveSongTopThree==null}}">
+                <t-empty t-class="empty-cls" t-class-image="t-empty__image" image="/img/kong.png" description="您还没有添加喜欢的歌曲，快去听歌添加吧！" />
+            </view> -->
+            <view wx:if="{{UserLoveSongTopThree!=null}}">
+
+                <!-- <t-cell wx:for="{{UserLoveSongTopThree}}" wx:key="key" wx:for-item="u" url="/pages/play/play?songId={{u.id}}" bordered="{{false}}">
+                    <view slot="description">
+                        <view class="p1">
+                            <text wx:for="{{u.ar}}" wx:key="key" wx:for-item="ar">{{ar.name+' '}}</text>
+                        </view>
+
+                    </view>
+                    <view slot="title">
+                        <text class="p1" style="font-size: 30rpx;font-size: 500;">{{u.name}}</text>
+                    </view>
+                    <view slot="left-icon">
+                        <t-image src="{{u.al.picUrl+'?param='+filters.integer(phoneWidth*0.3)+'y'+filters.integer(phoneWidth*0.3)}}" width="{{phoneWidth*0.15}}" height="{{phoneWidth*0.15}}" shape="round" />
+                    </view>
+                    <view slot="note">
+                        <t-icon name="more" data-songId="{{u.id}}" catchtap="clickIcon" />
+                    </view>
+                </t-cell> -->
+
+            </view>
+        </view>
+        <view wx:if="{{WechatOrCloudMusic=='CloudMusic'}}">
+            <t-empty t-class="empty-cls" t-class-image="t-empty__image" image="/img/kong.png" description="您还没有添加喜欢的歌曲，快去听歌添加吧！" />
+        </view>
+
+        <t-cell bordered="{{false}}">
+            <view slot="title">
+                <text decode="true" style="font-weight: 700;font-size: 20px;" bindtap="checkSongs">我的歌单</text>
+            </view>
+            <view slot="left-icon">
+                <t-icon name="view-list" style="color: #fb233b;"></t-icon>
+            </view>
+            <view slot="note">
+                <t-button size="small" variant="text" catchtap="createPlayList">
+                    <text style="font-size: 15px;">+新建歌单</text>
+                </t-button>
+            </view>
+        </t-cell>
+
+        <t-dialog visible="{{openCreatePlayList}}" title="新建歌单" content="歌单标题" confirm-btn="创建" cancel-btn="取消" bind:confirm="addNewPlayList" bind:cancel="closeDialog">
+            <t-input slot="content" placeholder="输入歌单标题" bindchange="inputPlayListName" value="{{inputPlayListName}}" custom-style="background-color:lightgray;border-radius:5px;" />
+        </t-dialog>
+        <!-- <t-button wx:if="{{isLogin==true}}" size="small" variant="text" shape="circle" icon="add-circle" style="right: 0;position: absolute;" bindtap="createPlayList"></t-button> -->
+
+
+
+        <view wx:if="{{WechatOrCloudMusic=='Wechat'}}">
+            <view wx:if="{{userPlayList==null}}">
+                <t-empty t-class="empty-cls" t-class-image="t-empty__image" image="/img/kong.png" description="您还未创建任何歌单，点击加号添加您的第一个歌单！" />
+            </view>
+
+            <view wx:if="{{userPlayList!=null}}">
+
+                <!-- <t-cell wx:for="{{userPlayList}}" wx:key="key" wx:for-item="u" url="/pages/playList/playList?id={{u.id}}&name={{u.playListName}}" bordered="{{false}}">
+                    <view slot="description">
+                        <block wx:for="{{}}" wx:key="key" wx:for-item="ar">{{}}</block>
+                    </view>
+                    <view slot="title">
+                        <text class="p1" style="font-size: 30rpx;font-size: 500;">{{u.playListName}}</text>
+                    </view>
+                    <view slot="left-icon"> -->
+                        <!-- <t-image src="{{'http://'+ip+':8080/img/getPic?address='+u.playListPic}}" width="{{phoneWidth*0.1}}" height="{{phoneWidth*0.1}}" shape="round" /> -->
+                        <!-- <t-image src="{{u.playListPic}}" width="{{phoneWidth*0.15}}" height="{{phoneWidth*0.15}}" shape="round" />
+                    </view>
+                    <view slot="note">
+                        <t-icon size="{{phoneWidth*0.05}}px" name="more" data-songId="{{u.id}}" catchtap="clickIcon" style="color: black;" />
+                    </view>
+                </t-cell> -->
+
+                <t-grid column="{{2}}" gutter="30" theme="card">
+
+                    <t-grid-item wx:for="{{userPlayList}}" wx:key="key" wx:for-item="u" text="" url="/pages/playList/playList?id={{u.id}}&name={{u.playListName}}" >
+                        <t-image src="{{u.playListPic}}" height="{{phoneWidth*0.42}}" width="{{phoneWidth*0.42}}" shape="round" />
+                        <view style="height: 10px;"></view>
+                        <view style="width: {{phoneWidth*0.42}}px;">
+                            <text class="p1" style="font-size: 30rpx;font-weight: 700;">{{u.playListName}}</text>
+                        </view>
+                    </t-grid-item>
+
+                </t-grid>
+
+            </view>
+        </view>
+        <view wx:if="{{WechatOrCloudMusic=='CloudMusic'}}">
+            <t-empty t-class="empty-cls" t-class-image="t-empty__image" image="/img/kong.png" description="您还未创建任何歌单，点击加号添加您的第一个歌单！" />
+        </view>
+
+        <!-- <view class="t" style="--t--:{{phoneHeight*0.05}}px"></view>
+        <view class="button-example" wx:if="{{isLogin}}">
+            <t-button custom-style="background-color: red;color:white;" size="small" block bindtap="logout">退出登录</t-button>
+        </view> -->
+
+    </view>
+
+    <!-- <view class="t" style="--t--:272rpx"></view> -->
+    <!-- <view class="demo-section__wrapper">
+        <t-cell-group theme="card">
+            <t-grid class="block" column="{{4}}">
+                <t-grid-item text="喜欢" image="/img/sc.png" />
+                <t-grid-item text="最近" image="/img/zj.png" />
+                <t-grid-item text="常听" image="/img/ct.png" />
+            </t-grid>
+        </t-cell-group>
+    </view> -->
+</block>
+
+<!--首页-->
+<block wx:if="{{tabBarValue=='1'}}">
+    <t-sticky>
+        <!-- <view style="background-color: white;">
+            <view class="t" style="--t--:{{phoneHeight*0.06}}px"></view>
+            <text decode="true" style="font-size: 25px;font-weight: 700;">&nbsp;&nbsp;首页</text>
+        </view> -->
+
+        <t-navbar class="custom-navbar2" custom-style="backdrop-filter:blur(20px);">
+            <view slot="left" class="custom-title">
+                <text class="p1" style="font-weight: 700;font-size: 55rpx;margin: 0 10px;">首页</text>
+            </view>
+        </t-navbar>
+
+    </t-sticky>
+
+    <t-cell bordered="{{false}}">
+        <view slot="title">
+            <text decode="true" style="font-weight: 700;font-size: 20px;margin: 0 5px;" bindtap="checkSongs">推荐艺人</text>
+        </view>
+    </t-cell>
+
+    <t-grid column="{{0}}" gutter="0">
+
+        <t-grid-item wx:for="{{topArtist}}" wx:key="key" wx:for-item="t" text="" url='/pages/singer/singer?singerId={{t.id}}' custom-style="width: {{phoneWidth*0.44}}px;position: relative;left: 10px;">
+            <!-- <t-image src="{{p.uiElement.image.imageUrl+'?param='+filters.integer(phoneWidth*0.6)+'y'+filters.integer(phoneWidth*0.6)}}" height="{{phoneWidth*0.4}}" width="{{phoneWidth*0.4}}" shape="round" /> -->
+
+            <t-avatar image="{{t.picUrl}}" size="150px" />
+            <view style="height: 10px;"></view>
+            <text class="p1" style="font-size: 30rpx;font-weight: 700;">{{t.name}}</text>
+        </t-grid-item>
+
+    </t-grid>
+
+    <t-cell bordered="{{false}}">
+        <view slot="title">
+            <text decode="true" style="font-weight: 700;font-size: 20px;margin: 0 5px;" bindtap="checkSongs">推荐歌单</text>
+        </view>
+    </t-cell>
+
+    <t-grid column="{{0}}" gutter="0">
+        <block wx:for="{{playList}}" wx:key="key" wx:for-item="p">
+            <t-grid-item text="" data-creativeId="{{p.creativeId}}" bind:click="clickPalyList" custom-style="width: {{phoneWidth*0.44}}px;position: relative;left: 15px;">
+                <!-- <t-image src="{{p.uiElement.image.imageUrl+'?param='+filters.integer(phoneWidth*0.6)+'y'+filters.integer(phoneWidth*0.6)}}" height="{{phoneWidth*0.4}}" width="{{phoneWidth*0.4}}" shape="round" /> -->
+
+                <t-image src="{{p.uiElement.image.imageUrl}}" height="{{phoneWidth*0.4}}" width="{{phoneWidth*0.4}}" shape="round" />
+                <view style="height: 10px;"></view>
+                <view style="width: {{phoneWidth*0.44}}px;">
+                    <text class="p1" style="font-size: 25rpx;font-weight: 700;margin: 0 10px;">{{p.uiElement.mainTitle.title}}</text>
+                </view>
+
+            </t-grid-item>
+        </block>
+    </t-grid>
+
+
+    <t-cell bordered="{{false}}">
+        <view slot="title">
+            <text decode="true" style="font-weight: 700;font-size: 20px;margin: 0 5px;" bindtap="checkSongs">新专速递</text>
+        </view>
+    </t-cell>
+
+    <t-grid column="{{0}}" gutter="0">
+
+        <t-grid-item wx:for="{{newest}}" wx:key="key" wx:for-item="n" text="" url='/pages/album/album?albumId={{n.id}}' custom-style="width: {{phoneWidth*0.44}}px;position: relative;left: 15px;">
+            <!-- <t-image src="{{p.uiElement.image.imageUrl+'?param='+filters.integer(phoneWidth*0.6)+'y'+filters.integer(phoneWidth*0.6)}}" height="{{phoneWidth*0.4}}" width="{{phoneWidth*0.4}}" shape="round" /> -->
+
+            <t-image src="{{n.picUrl}}" height="{{phoneWidth*0.4}}" width="{{phoneWidth*0.4}}" shape="round" />
+            <view style="height: 10px;"></view>
+            <view style="width: {{phoneWidth*0.44}}px;">
+                <text class="p1" style="font-size: 25rpx;font-weight: 700;margin: 0 10px;">{{n.name}}</text>
+                <text class="p1" style="font-size: 20rpx;font-weight: 500;margin: 0 10px;">{{n.artist.name}}</text>
+            </view>
+        </t-grid-item>
+
+    </t-grid>
+
+    <t-cell bordered="{{false}}">
+        <view slot="title">
+            <text decode="true" style="font-weight: 700;font-size: 20px;margin: 0 5px;" bindtap="checkSongs">最新MV</text>
+        </view>
+    </t-cell>
+
+    <t-grid column="{{0}}" gutter="0">
+        <t-grid-item wx:for="{{TJMV}}" wx:key="key" wx:for-item="m" text="" url="/pages/MV/MV?MVId={{m.id}}" custom-style="width: {{phoneWidth*0.75}}px;position: relative;left: 15px;">
+            <view solt="image">
+                <t-image src="{{m.cover}}" width="{{phoneWidth*0.4*16/9}}" height="{{phoneWidth*0.4}}" shape="round" />
+                <view style="height: 10px;"></view>
+                <view style="width: {{phoneWidth*0.44}}px;">
+                    <text class="p1" style="font-size: 25rpx;font-weight: 700;">{{m.name}}</text>
+                    <text class="p1" style="font-size: 20rpx;font-weight: 500;">{{m.artistName}}</text>
+                </view>
+            </view>
+        </t-grid-item>
+    </t-grid>
+
+    <!-- <view class="t" style="--t--:272rpx"></view> -->
+</block>
+
+<!--发现-->
+<block wx:if="{{tabBarValue=='2'}}">
+    <t-sticky>
+        <!-- <view style="background-color: white;">
+            <view class="t" style="--t--:{{phoneHeight*0.06}}px"></view>
+            <text decode="true" style="font-size: 25px;font-weight: 700;">&nbsp;&nbsp;发现</text>
+        </view> -->
+
+        <t-navbar class="custom-navbar2" custom-style="backdrop-filter:blur(50px);">
+            <view slot="left" class="custom-title">
+                <text class="p1" style="font-weight: 700;font-size: 55rpx;margin: 0 10px;">发现</text>
+            </view>
+        </t-navbar>
+
+
+
+    </t-sticky>
+
+    <view class="wrapper">
+        <!-- <t-collapse value="{{activeValues}}" bind:change="handleChange" default-expand-all>
+                <t-collapse-panel value="{{0}}" expandIcon>
+                    <view slot="header">
+                        <t-tag  variant="light" theme="danger" size='large'>
+                            <text style="font-size: 35rpx;font-weight: 600;">{{selectTagName}}</text>
+                        </t-tag>
+                    </view>
+                    <t-tag data-tagname="官方" class="tags" variant="light" theme="{{'官方'==selectTagName ? 'danger':''}}" bindtap='clickTag' size='large'>
+                        <text style="font-size: 35rpx;font-weight: 600;">官方</text>
+                    </t-tag>
+                    <t-tag wx:for="{{tags}}" bindtap='clickTag' data-tagid="{{t.id}}" data-tagname="{{t.name}}" wx:key="key" wx:for-item="t" class="tags" variant="light" theme="{{t.name==selectTagName ? 'danger':''}}" size='large'>
+                        <text style="font-size: 35rpx;font-weight: 600;">{{t.name}}</text>
+                    </t-tag>
+
+                </t-collapse-panel>
+            </t-collapse> -->
+    </view>
+
+    <t-back-top theme="round" text="" bind:to-top="onToTop"></t-back-top>
+    <t-grid theme="card" gutter="20">
+        <view style="height: 15px;"></view>
+        <t-tag data-tagname="官方" class="tags" variant="light" theme="{{'官方'==selectTagName ? 'danger':''}}" bindtap='clickTag' size='large'>
+            <text style="font-size: 25rpx;font-weight: 700;">官方</text>
+        </t-tag>
+        <t-tag wx:for="{{tags}}" bindtap='clickTag' data-tagid="{{t.id}}" data-tagname="{{t.name}}" wx:key="key" wx:for-item="t" class="tags" variant="light" theme="{{t.name==selectTagName ? 'danger':''}}" size='large'>
+            <text style="font-size: 25rpx;font-weight: 700;">{{t.name}}</text>
+        </t-tag>
+    </t-grid>
+
+
+
+
+    <t-grid column="{{2}}" theme="card" gutter="20">
+        <t-grid-item wx:for="{{JPPlayList}}" wx:key="key" wx:for-item="m" text="" url="/pages/playlistDetails/playlistDetails?creativeid={{m.id}}">
+            <view solt="image">
+                <t-image src="{{m.coverImgUrl}}" width="{{phoneWidth*0.44}}" height="{{phoneWidth*0.44}}" shape="round" />
+                <view style="height: 10px;"></view>
+                <text class="p1" style="font-size: 25rpx;font-weight: 700;">{{m.name}}</text>
+            </view>
+        </t-grid-item>
+    </t-grid>
+
+
+</block>
+
+<!--搜索-->
+<block wx:if="{{tabBarValue=='3'}}">
+    <view wx:if="{{!isOpenSearch}}">
+        <t-sticky>
+            <!-- <view style="background-color: white;">
+                <view class="t" style="--t--:{{phoneHeight*0.06}}px"></view>
+                <text decode="true" style="font-size: 25px;font-weight: 700;">&nbsp;&nbsp;搜索</text>
+            </view> -->
+
+            <t-navbar class="custom-navbar2">
+                <view slot="left" class="custom-title" custom-style="backdrop-filter:blur(20px);">
+                    <text class="p1" style="font-weight: 700;font-size: 55rpx;margin: 0 10px;">搜索</text>
+                </view>
+            </t-navbar>
+
+            <view class="example-search">
+                <t-button size="large" block bindtap="clickSearch" id="t-button">艺人，歌曲，歌词以及更多内容</t-button>
+                <!-- <t-search  placeholder="艺人，歌曲，歌词以及更多内容" /> -->
+            </view>
+        </t-sticky>
+
+        <t-cell wx:for="{{hotList}}" wx:key="key" wx:for-item="h" title="{{index+1 +' '+ h.first}}" bindtap="clickHotList" data-keyword="{{h.first}}" />
+
+    </view>
+
+    <view wx:if="{{isOpenSearch}}">
+        <t-sticky>
+            <view style="background-color: white;">
+                <view class="t" style="--t--:{{phoneHeight*0.06}}px"></view>
+                <text decode="true" style="font-size: 25px;font-weight: 700;">&nbsp;&nbsp;搜索</text>
+            </view>
+            <view class="example-search">
+                <t-search placeholder="艺人，歌曲，歌词以及更多内容" action="{{actionText}}" bind:focus="focusHandle" bind:action-click="actionHandle" bind:change="changeHandle" bind:clear="clearSearch" value="{{searchValue}}" />
+            </view>
+
+            <t-cell-group wx:if="{{!isShowSearch}}" theme="card">
+                <t-cell wx:for="{{searchSuggestion}}" wx:key="key" wx:for-item="s" title="{{s.keyword}}" data-keyword="{{s.keyword}}" bindtap="clickSuggestion" />
+            </t-cell-group>
+
+            <t-tabs defaultValue="{{1}}" bind:change="onTabsChange" t-class="custom-tabs">
+                <view wx:if="{{isShowSearch}}">
+                    <t-tab-panel label="歌曲" value="1">
+                    </t-tab-panel>
+                    <t-tab-panel label="专辑" value="10"></t-tab-panel>
+                    <t-tab-panel label="歌手" value="100"></t-tab-panel>
+                    <t-tab-panel label="MV" value="1004"></t-tab-panel>
+                </view>
+
+            </t-tabs>
+        </t-sticky>
+
+
+
+        <t-cell wx:if="{{searchType==1}}" wx:for="{{searchSongInfo}}" wx:key="key" wx:for-item="s" data-songId="{{s.id}}" url="/pages/play/play?songId={{s.id}}">
+            <view slot="description" data-songId="{{}}">
+               <view class="p1">
+                    <text class="" style="font-size: 15px;font-weight: 600;" wx:for="{{s.ar}}" wx:key="key" wx:for-item="ar">{{ar.name}}{{s.ar.length-1==index ? '':'/'}}</text>
+                </view>
+            </view>
+            <view slot="title">
+                <text class="p1" style="font-size: 18px;font-weight: 600;">{{s.name}}</text>
+            </view>
+            <view slot="left-icon">
+                <t-image src="{{s.al.picUrl+'?param='+filters.integer(phoneWidth*0.3)+'y'+filters.integer(phoneWidth*0.3)}}" width="{{phoneWidth*0.15}}" height="{{phoneWidth*0.15}}" shape="round" />
+            </view>
+            <view slot="note">
+                <t-icon name="more" data-songId="{{s.al.id}}" catchtap="clickIcon" />
+            </view>
+        </t-cell>
+
+
+
+        <t-cell wx:if="{{searchType==10}}" wx:for="{{searchSongInfo}}" wx:key="key" wx:for-item="s" url="/pages/album/album?albumId={{s.id}}">
+            <view slot="description">
+                <text class="p1" style="font-size: 15px;font-weight: 600;">{{s.artist.name}}</text>
+
+            </view>
+            <view slot="title">
+                <text class="p1" style="font-size: 18px;font-weight: 600;">{{s.name}}</text>
+
+            </view>
+            <view slot="left-icon">
+                <t-image src="{{s.blurPicUrl+'?param='+filters.integer(phoneWidth*0.3)+'y'+filters.integer(phoneWidth*0.3)}}" width="{{phoneWidth*0.15}}" height="{{phoneWidth*0.15}}" shape="round" />
+            </view>
+            <view slot="note">
+                <t-icon name="more" data-songId="{{s.id}}" catchtap="clickIcon" />
+            </view>
+        </t-cell>
+
+
+
+        <t-cell wx:if="{{searchType==100}}" wx:for="{{searchSongInfo}}" wx:key="key" wx:for-item="s" url="/pages/singer/singer?singerId={{s.id}}">
+            <view slot="description">
+            </view>
+            <view slot="title">
+                <text class="p1" style="font-size: 18px;font-weight: 600;">{{s.name}}</text>
+            </view>
+            <view slot="left-icon">
+                <!-- <t-image src="{{s.picUrl}}" width="{{phoneWidth*0.1}}" height="{{phoneWidth*0.1}}" shape="circle" /> -->
+                <t-avatar class="avatar-example" size="large" image="{{s.img1v1Url}}" />
+            </view>
+            <view slot="note">
+                <t-icon name="more" data-songId="{{s.id}}" catchtap="clickIcon" />
+            </view>
+        </t-cell>
+
+
+
+        <t-cell wx:if="{{searchType==1004}}" wx:for="{{searchSongInfo}}" wx:key="key" wx:for-item="s" url="/pages/MV/MV?MVId={{s.id}}">
+            <view slot="description">
+                <text class="p1" style="font-size: 15px;font-weight: 600;">{{s.artistName}}</text>
+            </view>
+            <view slot="title">
+                <text class="p1" style="font-size: 18px;font-weight: 600;">{{s.name}}</text>
+            </view>
+            <view slot="left-icon">
+                <t-image src="{{s.cover}}" width="{{phoneWidth*0.3}}" mode="widthFix" shape="round" />
+            </view>
+
+        </t-cell>
+
+
+    </view>
+    <!-- <view class="t" style="--t--:{{phoneHeight*0.1}}rpx"></view> -->
+</block>
+
+
+
+
+
+<view class="t" style="--t--:180px"></view>
+
+
+<view>
+
+    <!-- <t-tab-bar defaultValue="0" bindchange="clickTabBar" theme="tag" split="{{false}}" id="tab-bar" custom-style="top:{{phoneHeight*0.82}}px">
+        <t-cell url="" bordered="{{false}}">
+                    <view slot="title">
+                        {{UserRecentlyListenTopThree[0].name}}
+                    </view>
+                    <view slot="left-icon">
+                        <t-image src="{{UserRecentlyListenTopThree[0].al.picUrl+'?param='+filters.integer(phoneWidth*0.3)+'y'+filters.integer(phoneWidth*0.3)}}" width="{{phoneWidth*0.1}}" height="{{phoneWidth*0.1}}" shape="round" />
+                    </view>
+                    <view slot="note">
+                        <t-icon name="more" data-songId="{{u.id}}" catchtap="clickIcon" />
+                    </view>
+                </t-cell>
+        
+    </t-tab-bar> -->
+
+    <!-- <view class="play">
+        <t-cell url="" bordered="{{false}}">
+            <view slot="title">
+                {{UserRecentlyListenTopThree[0].name}}
+            </view>
+            <view slot="left-icon">
+                <t-image src="{{UserRecentlyListenTopThree[0].al.picUrl+'?param='+filters.integer(phoneWidth*0.3)+'y'+filters.integer(phoneWidth*0.3)}}" width="{{phoneWidth*0.1}}" height="{{phoneWidth*0.1}}" shape="round" />
+            </view>
+            <view slot="note">
+                <t-icon name="more" data-songId="{{u.id}}" catchtap="clickIcon" />
+            </view>
+        </t-cell>
+    </view> -->
+
+    <view class="player" style="width: {{phoneWidth}}px;bottom: {{phoneWidth*0.14+safeHeight}}px;">
+        <t-cell url="/pages/playing/playing?songId={{UserRecentlyListenTopThree[0].id}}" bordered="{{false}}">
+            <view slot="description">
+                <!-- <block wx:for="{{UserRecentlyListenTopThree[0].ar}}" wx:key="key" wx:for-item="ar">{{ar.name+' '}}</block> -->
+            </view>
+            <view slot="title" style="width: {{phoneWidth*0.65}}px;">
+                <text class='P'>{{UserRecentlyListenTopThree[0].name}}</text>
+            </view>
+            <view slot="left-icon">
+                <t-image src="{{UserRecentlyListenTopThree[0].al.picUrl}}" width="{{phoneWidth*0.12}}" height="{{phoneWidth*0.12}}" shape="round" />
+            </view>
+            <view slot="note">
+                <t-button variant="text" size="small" shape="circle" catchtap="{{isPlay ? 'zt':'bf'}}">
+                    <t-image src="{{isPlay ? '/img/hszt.png':'/img/hsbf.png'}}" width="{{phoneHeight*0.05}}" height="{{phoneHeight*0.05}}">
+                    </t-image>
+                </t-button>
+            </view>
+        </t-cell>
+    </view>
+    <view id="tabbar2">
+        <t-tab-bar defaultValue="0" bindchange="clickTabBar" theme="" split="{{false}}">
+            <t-tab-bar-item value="0" icon="home">
+                <text style="font-size: 25rpx;font-weight: 700;">音乐库</text>
+            </t-tab-bar-item>
+            <t-tab-bar-item value="1" icon="app">
+                <text style="font-size: 25rpx;font-weight: 700;">首页</text>
+            </t-tab-bar-item>
+            <t-tab-bar-item value="2" icon="chart-bubble">
+
+                <text style="font-size: 25rpx;font-weight: 700;">发现</text>
+            </t-tab-bar-item>
+            <t-tab-bar-item value="3" icon="search">
+                <text style="font-size: 25rpx;font-weight: 700;">搜索</text>
+            </t-tab-bar-item>
+        </t-tab-bar>
+    </view>
+
+
+    <!-- <t-tab-bar  bindchange="clickTabBar" shape="round" theme="tag" split="{{false}}">
+        <t-tab-bar-item value="0" icon="user">我的</t-tab-bar-item>
+        <t-tab-bar-item value="1" icon="internet">发现</t-tab-bar-item>
+        <t-tab-bar-item value="2" icon="chart-bar">正在播放</t-tab-bar-item>
+        <t-tab-bar-item value="3" icon="search">搜索</t-tab-bar-item>
+    </t-tab-bar> -->
+
+</view>

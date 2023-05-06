@@ -1,0 +1,59 @@
+<view wx:if="{{WechatOrCloudMuisc == 'Wechat'}}">
+
+    <t-action-sheet id="t-action-sheet" bind:selected="handleSelected" />
+
+    <t-dialog visible="{{showDeletePlayList}}">
+        <view slot='content'>
+            <text style="font-weight: 600;font-size: 35rpx;">确定要删除此歌单吗？删除后无法恢复！</text>
+        </view>
+        <view slot="confirmBtn">
+            <view class="button-example2">
+                <t-button block size="small" style="width: {{width*0.3}}px;" bindtap="closeDialog">取消</t-button>
+                <t-button block size="small" theme='danger' bindtap="deletePlayList">删除</t-button>
+            </view>
+        </view>
+        <!-- <view slot="cancelBtn">
+        <t-button block size="large">填充按钮</t-button>
+    </view> -->
+    </t-dialog>
+
+    <view class="t" style="--t--:{{height*0.01}}rpx"></view>
+    <t-image src="{{playListInfo.playListPic}}" width="{{width*0.6}}" height="{{width*0.6}}" shape="round" class="img">
+    </t-image>
+
+    <view class="t" style="--t--:{{height*0.01}}rpx"></view>
+    <text class="text" style="font-size: 20px;font-weight: 700;" bindtap="">{{playListInfo.playListName}}</text>
+    <text class="text" style="font-size: 15px;font-weight: 700;color: #3c3c41;" bindtap="">{{count+'首歌曲'}}</text>
+    <view class="t" style="--t--:{{height*0.01}}rpx"></view>
+    <view class="button-example">
+        <view wx:if="{{count == 0}}">
+            <t-button block size="small" custom-style="color: #fb233b;background-color: #eeeef0;" icon='play' disabled>播放</t-button>
+        </view>
+
+        <view wx:if="{{count != 0}}">
+            <t-button block size="small" custom-style="color: #fb233b;background-color: #eeeef0;" icon='play'>播放</t-button>
+        </view>
+
+        <t-button custom-style="color: #fb233b;background-color: #eeeef0;" block size="small" icon='ellipsis' bindtap='handleAction'>编辑</t-button>
+    </view>
+
+    <t-cell-group theme="card">
+        <t-cell wx:for="{{songInfo}}" wx:key="key" wx:for-item="h" url="/pages/play/play?songId={{h.id}}">
+            <view slot="description">
+                <view class="p1">
+                    <p wx:for="{{h.ar}}" wx:key="key" wx:for-item="ar" >{{ar.name}}{{h.ar.length-1==index ? '':'/'}}</p>
+                </view>
+            </view>
+            <view slot="title">
+                <text class="p1" style="font-size: 35rpx;font-weight: 600;">{{h.name}}</text>
+            </view>
+            <view slot="left-icon">
+                <!-- <t-image src="{{h.al.picUrl+'?param='+filters.integer(width*0.3)+'y'+filters.integer(width*0.3)}}" width="{{width*0.1}}" height="{{width*0.1}}" shape="round" /> -->
+                <t-image src="{{h.al.picUrl}}" width="{{width*0.15}}" height="{{width*0.15}}" shape="round" />
+            </view>
+            <view slot="note">
+                <t-icon name="more" catchtap="clickIcon" />
+            </view>
+        </t-cell>
+    </t-cell-group>
+</view>

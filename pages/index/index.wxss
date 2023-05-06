@@ -1,0 +1,179 @@
+/**index.wxss**/
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #aaa;
+}
+
+.userinfo-avatar {
+  overflow: hidden;
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.usermotto {
+  margin-top: 200px;
+}
+
+.demo-section__wrapper {
+    margin: 20rpx 0;
+}
+
+
+.touxiang{
+    display: flex;
+    justify-content: center;
+    margin: 20rpx 0;
+}
+
+.nicheng{
+    display: flex;
+    justify-content: center;
+}
+
+.block {
+    display: block;
+    margin-bottom: 32rpx;
+  }
+
+  .block2 {
+    position: relative;
+    width: 240px;
+    height: 240px;
+    background: #fff;
+    border-radius: 16rpx;
+  }
+
+  .close-btn {
+    position: absolute;
+    left: 50%;
+    margin-left: -32rpx;
+    bottom: calc(-1 * (48rpx + 64rpx));
+  }
+
+  .example-search {
+    background-color: #fff;
+    padding: 16rpx 32rpx;
+  }
+
+  .custom-tabs {
+    margin-bottom: 32rpx;
+  }
+
+  .t{
+    display: flex;
+    justify-content: center;
+    height: var(--t--);
+}
+
+.t-empty__image {
+    width: 240rpx !important;
+    height: 240rpx !important;
+  }
+
+  .button-example {
+    margin: 0 150rpx;
+  }
+
+  .play{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 130px;
+    background: white;
+    display: flex;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .wrapper1 {
+    --td-tab-bar-border-color: #e7e7e7;
+    --td-tab-bar-bg-color: #eee;
+    --td-tab-bar-hover-color: #ddd;
+    --td-tab-bar-item-color: #bbb;
+    --td-tab-bar-item-active-color: #333;
+  }
+
+  .dialog-input {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    margin-top: 32rpx;
+    border-radius: 8rpx;
+    background-color: #f3f3f3;
+    box-sizing: border-box;
+  }
+
+  .player{
+    position: fixed;
+    /* bottom: 60px; */
+    border-top: 1px black solid;
+    
+  }
+
+  .P{
+    display: block;/*block	此元素将显示为块级元素，此元素前后会带有换行符。text 为内联元素，而overflow：hidden；作用于块元素上*/
+  white-space: nowrap;/*取消换行*/
+  overflow: hidden;/*超出的部分隐藏*/
+  text-overflow: ellipsis;/*隐藏的部分用省略号代替*/
+  font-size: 20px;
+  }
+
+  .p1{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    display: -moz-box;
+    -moz-line-clamp: 1;
+    -moz-box-orient: vertical;
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: normal;    
+  }
+
+  .tags{
+      margin: 0 15rpx 10rpx;
+      display: inline-block;
+  }
+
+  .tags2{
+      margin-top: 20rpx;
+  }
+
+
+  .custom-navbar2 {
+    --td-navbar-color: black;
+    --td-navbar-bg-color: transparent;
+    overflow: hidden;
+  }
+
+  .custom-title {
+    margin-left: 16rpx;
+    font-size: 36rpx;
+    font-weight: 600;
+  }
+
+  .p2{
+    overflow: hidden;
+    text-overflow: ellipsis;
+ 
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    display: -moz-box;
+    -moz-line-clamp: 1;
+    -moz-box-orient: vertical;
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: nowrap;    
+  }
+
+
+
+  
+  

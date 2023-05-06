@@ -1,0 +1,242 @@
+<wxs module="filters" src="../../utils/tool.wxs"></wxs>
+<wxs module="formatDate" src="../../utils/fiter.wxs"></wxs>
+
+<t-sticky>
+    <t-navbar class="{{fixs ? 'custom-navbar2' : 'custom-navbar'}}" left-arrow>
+        <view slot="left" class="custom-title">
+            <text style="font-weight: 700;">{{artisName}}</text>
+        </view>
+    </t-navbar>
+</t-sticky>
+
+<t-popup visible="{{visible}}" bind:visible-change="onVisibleChange" placement="bottom" >
+            <view class="block2" style="max-height: {{height*0.9}}px;">
+                <view class="header">
+                    <view class="title">{{singerInfo.artist.name}}</view>
+                </view>
+                <scroll-view scroll-y="true" style="max-height: {{height*0.8}}px;">
+                    <t-cell-group theme="card">
+                        <text class="dec">{{singerInfo.artist.briefDesc}}</text>
+                        <view style="height: 10px;"></view>
+                    </t-cell-group>
+                </scroll-view>
+
+            </view>
+
+            <!-- <view class="block" >
+                <view class="header">
+                    <view class="title">{{albumInfo.album.name}}</view>
+                </view>
+                    <t-cell-group theme="card">
+                        <text class="dec">{{albumInfo.album.description}}</text>
+                    </t-cell-group>
+            </view> -->
+
+        </t-popup>
+
+<t-image src="{{singerInfo.artist.picUrl}}" width="{{width}}" mode="widthFix" />
+
+<!-- <view style="background-color: white;">
+    <view class="t" style="--t--:{{height*0.02}}rpx;"></view>
+    <text decode="true" style="font-weight: 700;font-size: 25px;" class="img">&nbsp;&nbsp;{{singerInfo.artist.name}}</text>
+    <view class="t" style="--t--:{{height*0.02}}rpx;"></view>
+</view> -->
+
+
+
+
+<t-cell bordered="{{false}}" id="artisNameId">
+    <view slot="title">
+        <text decode="true" style="font-weight: 700;font-size: 25px;">{{singerInfo.artist.name}}</text>
+    </view>
+
+    <view slot="description">
+        <view style="height: 5px;"></view>
+        <text style="font-size: 35rpx;font-weight: 600;">艺人\n</text>
+        <text style="font-size: 30rpx;font-weight: 600;">{{singerInfo.artist.musicSize+'首歌·'+singerInfo.artist.albumSize+'张专辑·'+singerInfo.artist.mvSize+'个MV'}}\n</text>
+        <view style="height: 5px;"></view>
+        <view bindtap='checkSingerInfo'>
+            <text class="p2" style="font-size: 30rpx;font-weight: 600;">{{singerInfo.artist.briefDesc}}\n</text>
+        </view>
+        
+    </view>
+    <view slot="note">
+        <!-- <t-button wx:if="{{!isLoveSinger}}" size="small" bindtap="loveSinger">
+            <text decode="true" style="font-weight: 700;font-size: 30rpx;">+关注</text>
+        </t-button>
+
+        <t-button wx:if="{{isLoveSinger}}" theme="" size="small" bindtap="cancelLoveSinger">
+            <text decode="true" style="font-weight: 700;font-size: 30rpx;color: #fb233b;">已关注</text>
+        </t-button> -->
+
+    </view>
+</t-cell>
+
+<view class="button-example">
+    <t-button block size="medium" custom-style="color: #fb233b;background-color: #eeeef0;" icon='play'>播放</t-button>
+    <t-button wx:if="{{!isLoveSinger}}" size="medium" bindtap="loveSinger" block custom-style="background-color: #eeeef0;">
+        <text decode="true" style="font-weight: 700;font-size: 30rpx;">+关注</text>
+    </t-button>
+
+    <t-button wx:if="{{isLoveSinger}}" theme="" size="medium" bindtap="cancelLoveSinger" block custom-style="background-color: #eeeef0;">
+        <text decode="true" style="font-weight: 700;font-size: 30rpx;color: #fb233b;">已关注</text>
+    </t-button>
+</view>
+
+<t-cell bordered="{{false}}" url="/pages/album/album?albumId={{newAlbums[0].id}}" hover='true'>
+
+    <view slot="title">
+        <text class="p1" decode="true" style="font-weight: 700;font-size: 20px;">{{newAlbums[0].name+'-'+newAlbums[0].type}}</text>
+    </view>
+
+    <view slot="description">
+        <text decode="true" style="font-weight: 700;font-size: 15px;">{{newAlbumsTime+'\n'+newAlbums[0].size+'首歌曲'}}</text>
+    </view>
+
+    <view slot="left-icon">
+        <t-image src="{{newAlbums[0].picUrl}}" width="{{width*0.25}}" height="{{width*0.25}}" shape="round" />
+    </view>
+
+</t-cell>
+
+<t-cell bordered="{{false}}" bindtap="checkSongs" hover='true'>
+    <view slot="title">
+        <text decode="true" style="font-weight: 700;font-size: 20px;">歌曲排行</text>
+    </view>
+    <view slot="left-icon">
+        <t-icon name="/img/gqph.png"></t-icon>
+    </view>
+    <view slot="right-icon">
+        <t-icon name="chevron-right" style="color: #3c3c41;"></t-icon>
+    </view>
+</t-cell>
+
+
+
+
+<t-cell wx:for="{{littleHotSongs}}" wx:key="key" wx:for-item="h" url="/pages/play/play?songId={{h.id}}">
+    <view slot="description">
+        <view class="p1">
+            <text  wx:for="{{h.ar}}" wx:key="key" wx:for-item="ar">{{ar.name}}{{h.ar.length-1==index ? '':'/'}}</text>
+        </view>
+    </view>
+    <view slot="title">
+
+        <text class="p1" style="font-size: 30rpx;font-weight: 500;">{{h.name}}</text>
+    </view>
+    <view slot="left-icon">
+        <!-- <t-image src="{{h.al.picUrl+'?param='+filters.integer(width*0.3)+'y'+filters.integer(width*0.3)}}" width="{{width*0.15}}" height="{{width*0.15}}" shape="round" /> -->
+        <t-image src="{{h.al.picUrl}}" width="{{width*0.15}}" height="{{width*0.15}}" shape="round" />
+    </view>
+    <view slot="note">
+        <t-icon name="more" data-songId="{{s.id}}" catchtap="clickIcon" />
+    </view>
+</t-cell>
+
+<view class="button-example2">
+    <t-button size="large" variant="text" block bindtap="checkAllSongs">
+        <text style="font-size: 15px;font-weight: 700;">查看歌手全部歌曲></text>
+    </t-button>
+</view>
+
+<t-cell bordered="{{false}}" bindtap="checkAlbums" hover='true'>
+    <view slot="title">
+        <text decode="true" style="font-weight: 700;font-size: 20px;">专辑</text>
+    </view>
+    <view slot="left-icon">
+        <t-icon name="/img/zj.png"></t-icon>
+    </view>
+    <view slot="right-icon">
+        <t-icon name="chevron-right" style="color: #3c3c41;"></t-icon>
+    </view>
+</t-cell>
+
+
+
+<t-grid column="{{0}}" gutter="0">
+    <t-grid-item wx:for="{{Albums}}" wx:key="key" wx:for-item="h" text="" url="/pages/album/album?albumId={{h.id}}" custom-style="width: {{width*0.44}}px;position: relative;left: 10px;">
+        <view solt="image">
+            <!-- <t-image src="{{h.picUrl+'?param='+filters.integer(width*0.55)+'y'+filters.integer(width*0.55)}}" width="{{width*0.4}}" mode="widthFix" shape="round" /> -->
+            <t-image src="{{h.picUrl}}" width="{{width*0.4}}" height="{{width*0.4}}" shape="round" />
+            <view style="height: 10px;"></view>
+            <view style="width: {{width*0.4}}px;">
+                <text class="p1" style="font-size: 25rpx;font-weight: 700;">{{h.name}}</text>
+                <text style="color: #8f8e92;font-size: 24rpx;font-weight: 700;">{{formatDate.formatDate(h.publishTime)}}</text>
+            </view>
+        </view>
+    </t-grid-item>
+</t-grid>
+
+<t-cell bordered="{{false}}" bindtap="checkEP">
+    <view slot="title">
+        <text decode="true" style="font-weight: 700;font-size: 20px;" class="img">单曲与EP</text>
+    </view>
+    <view slot="left-icon">
+        <t-icon name="/img/dqorep.png"></t-icon>
+    </view>
+    <view slot="right-icon">
+        <t-icon name="chevron-right" style="color: #3c3c41;"></t-icon>
+    </view>
+</t-cell>
+
+
+<!-- <t-grid class="block" column="{{0}}" gutter="20">
+    <t-grid-item wx:for="{{hotAlbums}}" wx:key="index" text="{{item.name}}">
+        <t-image src="{{item.picUrl}}"  width="{{width*0.43}}" mode="widthFix" shape="round" />
+    </t-grid-item>
+</t-grid> -->
+
+
+
+<t-grid column="{{0}}" gutter="0">
+    <t-grid-item wx:for="{{EP}}" wx:key="key" wx:for-item="h" text="" url="/pages/album/album?albumId={{h.id}}" custom-style="width: {{width*0.44}}px;position: relative;left: 10px;">
+        <view solt="image">
+            <!-- <t-image src="{{h.picUrl+'?param='+filters.integer(width*0.55)+'y'+filters.integer(width*0.55)}}" width="{{width*0.4}}" mode="widthFix" shape="round" /> -->
+            <t-image src="{{h.picUrl}}" width="{{width*0.4}}" height="{{width*0.4}}" shape="round" />
+            <view style="height: 10px;"></view>
+            <view style="width: {{width*0.4}}px;">
+                <text class="p1" style="font-size: 25rpx;font-weight: 700;">{{h.name}}</text>
+                <text style="color: #8f8e92;font-size: 24rpx;font-weight: 700;">{{formatDate.formatDate(h.publishTime)}}</text>
+            </view>
+        </view>
+    </t-grid-item>
+</t-grid>
+
+
+<t-cell bordered="{{false}}" bindtap="checkMV" hover='true'>
+    <view slot="title">
+        <text decode="true" style="font-weight: 700;font-size: 20px;" class="img">MV</text>
+    </view>
+    <view slot="left-icon">
+        <t-icon name="/img/mv.png"></t-icon>
+    </view>
+    <view slot="right-icon">
+        <t-icon name="chevron-right" style="color: #3c3c41;"></t-icon>
+    </view>
+</t-cell>
+
+<t-grid column="{{0}}" gutter="0">
+    <t-grid-item wx:for="{{mvInfo}}" wx:key="key" wx:for-item="m" text="" url="/pages/MV/MV?MVId={{m.id}}" custom-style="width: {{width*0.65}}px;position: relative;left: 10px;">
+        <view solt="image">
+            <t-image src="{{m.imgurl16v9}}" width="{{width*0.6}}" mode="widthFix" shape="round" />
+            <view style="height: 10px;"></view>
+            <view style="width: {{width*0.6}}px;">
+                <text class="p1" style="font-size: 25rpx;font-weight: 700;">{{m.name}}</text>
+            </view>
+        </view>
+    </t-grid-item>
+</t-grid>
+
+<t-cell bordered="{{false}}">
+    <view slot="title">
+        <text decode="true" style="font-weight: 700;font-size: 20px;">相似歌手</text>
+    </view>
+</t-cell>
+
+<t-grid column="{{2}}" theme="card" gutter="20">
+    <t-grid-item wx:for="{{likeSinger}}" wx:key="key" wx:for-item="l" text="{{l.name}}" url="/pages/singer/singer?singerId={{l.id}}">
+        <view solt="image">
+            <t-avatar size="large" image="{{l.picUrl}}" />
+        </view>
+    </t-grid-item>
+</t-grid>
